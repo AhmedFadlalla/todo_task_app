@@ -21,7 +21,9 @@ class AddTaskScreen extends StatelessWidget {
         create: (context) => AddTaskCubit(),
         child: BlocConsumer<AddTaskCubit, AddTaskState>(
           listener: (context, state) {
-            // TODO: implement listener
+           if(state is AddTaskSuccessState){
+             AppFunctions.showToast(text: "Add Task Success");
+           }
           },
           builder: (context, state) {
             var cubit=AddTaskCubit.get(context);
@@ -73,14 +75,16 @@ class AddTaskScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 15.h,),
                       InkWell(
-                        onTap: (){},
+                        onTap: (){
+                          cubit.getImage();
+                        },
                         child: Container(
                           width: double.infinity,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10.r),
                             border: Border.all(color: Colors.grey)
                           ),
-                          child: Padding(
+                          child: cubit.image!=null?Image.file(cubit.image!):Padding(
                             padding:  EdgeInsets.all(20.r),
                             child: Column(
                               children: [
@@ -96,7 +100,14 @@ class AddTaskScreen extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 15.h,),
-                      BottomWidget(text: "Add Task", onTap: (){})
+                      BottomWidget(text: "Add Task", onTap: (){
+
+
+                        if(cubit.formKey.currentState!.validate()){
+                          cubit.addTask();
+
+                        }
+                      })
                     ],
                   ),
                 ),

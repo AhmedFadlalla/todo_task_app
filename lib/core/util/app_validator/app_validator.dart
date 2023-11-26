@@ -5,6 +5,18 @@ class AppValidators{
     }
     return null;
   };
+  static String? Function(String?) confirmPasswordValidation({
+  required String password
+})=>(value) {
+    print("value:: ${value}  \n password ${password}");
+    if(value!.trim().isEmpty){
+      return "Confirm Password must not be empty";
+    }
+    else if(value!=password){
+      return "Confirm password and password must be exactly the same";
+    }
+    return null;
+  };
 
 
   // static String? Function(String?) phoneValidator({
